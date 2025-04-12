@@ -1,0 +1,17 @@
+{
+  "name": "postman-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backend": "cd backend && pnpm run dev",
+    "frontend": "cd frontend && pnpm run dev",
+    "start": "concurrently -p \"[{name}]\" -n \"Server,Client\"  -c \"bgWhite.bold,bgMagenta.bold\" \"pnpm run backend\" \"pnpm run frontend --host\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
