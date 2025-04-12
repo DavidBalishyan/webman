@@ -73,12 +73,12 @@ const RequestBuilder = ({ setResponse }: Props) => {
       setResponse(res);
     } catch (err) {
       console.error(err);
-      alert(`Test ${testMethod} request failed.`);
     }
   };
 
   return (
     <div className="card bg-base-100 shadow p-4 space-y-4">
+
       {/* Method & URL */}
       <div className="flex items-center gap-2">
         <select
@@ -105,10 +105,11 @@ const RequestBuilder = ({ setResponse }: Props) => {
         </button>
       </div>
 
-      {/* Headers */}
-      <div>
-        <h4 className="font-semibold mb-2">Headers</h4>
-        <div className="space-y-2">
+      {/* Accordion Section */}
+      <div className="collapse collapse-arrow bg-base-200">
+        <input type="checkbox" />
+        <div className="collapse-title text-lg font-medium">Headers</div>
+        <div className="collapse-content space-y-2">
           {headers.map((header, index) => (
             <div key={index} className="flex gap-2 items-center">
               <input
@@ -133,21 +134,25 @@ const RequestBuilder = ({ setResponse }: Props) => {
               </button>
             </div>
           ))}
+
+          <button className="btn btn-sm btn-accent mt-2" onClick={addHeader}>
+            + Add Header
+          </button>
         </div>
-        <button className="btn btn-sm btn-accent mt-2" onClick={addHeader}>
-          + Add Header
-        </button>
       </div>
 
-      {/* Body */}
-      <div>
-        <h4 className="font-semibold mb-2">Body</h4>
-        <textarea
-          className="textarea textarea-bordered w-full h-40"
-          placeholder='{"key": "value"}'
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+      {/* Body Editor Section */}
+      <div className="collapse collapse-arrow bg-base-200">
+        <input type="checkbox"/>
+        <div className="collapse-title text-lg font-medium">Body</div>
+        <div className="collapse-content">
+          <textarea
+            className="textarea textarea-bordered w-full h-40"
+            placeholder='{"key": "value"}'
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* Test Buttons */}
@@ -182,3 +187,4 @@ const RequestBuilder = ({ setResponse }: Props) => {
 };
 
 export default RequestBuilder;
+

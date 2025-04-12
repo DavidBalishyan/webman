@@ -1,10 +1,15 @@
+import { useState } from "react";
 import { ApiResponse } from "../types";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import themeOptions from "../styles/themeOptions";
 
 interface Props {
   response: ApiResponse | null;
 }
 
 const ResponseViewer = ({ response }: Props) => {
+  const [selectedTheme, setSelectedTheme] = useState<keyof typeof themeOptions>("Atom One Dark");
+
   if (!response) return null;
 
   return (
@@ -13,6 +18,24 @@ const ResponseViewer = ({ response }: Props) => {
         <div>Status: <span className="font-bold">{response.status}</span></div>
         <div>Time: <span className="font-bold">{response.time} ms</span></div>
         <div>Size: <span className="font-bold">{response.size}</span></div>
+      </div>
+
+      {/* Theme Picker */}
+      <div className="form-control w-60">
+        <label className="label">
+          <span className="label-text">Syntax Highlight Theme</span>
+        </label>
+        <select
+          className="select select-bordered"
+          value={selectedTheme}
+          onChange={(e) => setSelectedTheme(e.target.value as keyof typeof themeOptions)}
+        >
+          {Object.keys(themeOptions).map((themeName) => (
+            <option key={themeName} value={themeName}>
+              {themeName}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Response Headers */}
@@ -41,9 +64,20 @@ const ResponseViewer = ({ response }: Props) => {
       {/* Response Body */}
       <div>
         <h4 className="font-semibold mb-2">Body</h4>
-        <pre className="bg-base-100 p-2 rounded overflow-auto whitespace-pre-wrap">
-          {response.body}
-        </pre>
+        <SyntaxHighlighter
+          language="json"
+          style={themeOptions[selectedTheme as keyof typeof themeOptions]}
+          customStyle={{
+            borderRadius: "0.5rem", 
+            padding: "1rem",
+            background: "var(--b1)",
+            fontSize: "0.85rem",
+          }}
+        >
+          {typeof response.body === "object"
+            ? JSON.stringify(response.body, null, 2)
+            : response.body}
+        </SyntaxHighlighter>
       </div>
     </div>
   );

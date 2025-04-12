@@ -1,3 +1,4 @@
+// types/index.ts
 export interface ApiResponse {
   status: number;
   time: number;

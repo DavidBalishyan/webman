@@ -11,7 +11,7 @@ function App() {
     <div className="flex h-screen bg-base-200 text-base-content">
       <Sidebar />
       <main className="flex flex-col flex-1 p-4 gap-4 overflow-auto">
-        <RequestBuilder setResponse={setResponse} />
+        <RequestBuilder setResponse={setResponse}/>
         <ResponseViewer response={response} />
       </main>
     </div>
@@ -19,3 +19,4 @@ function App() {
 }
 
 export default App;
+
