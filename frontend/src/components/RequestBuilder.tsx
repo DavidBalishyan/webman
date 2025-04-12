@@ -17,7 +17,6 @@ const RequestBuilder = ({ setResponse }: Props) => {
   const [headers, setHeaders] = useState<Header[]>([{ key: "", value: "" }]);
   const [body, setBody] = useState("");
 
-  // 👉 This is handleSend
   const handleSend = async () => {
     if (!url) return alert("Enter a URL");
 
@@ -54,6 +53,28 @@ const RequestBuilder = ({ setResponse }: Props) => {
     const updatedHeaders = [...headers];
     updatedHeaders.splice(index, 1);
     setHeaders(updatedHeaders);
+  };
+
+  const sendTestRequest = async (testMethod: string) => {
+    const testUrl = "https://jsonplaceholder.typicode.com/posts";
+    const testHeaders = [{ key: "Content-Type", value: "application/json" }];
+    let testBody: any = undefined;
+
+    if (testMethod !== "GET" && testMethod !== "DELETE") {
+      testBody = {
+        title: `${testMethod} test title`,
+        body: `${testMethod} test content`,
+        userId: 1,
+      };
+    }
+
+    try {
+      const res = await sendRequest(testMethod, testUrl, testBody, testHeaders);
+      setResponse(res);
+    } catch (err) {
+      console.error(err);
+      alert(`Test ${testMethod} request failed.`);
+    }
   };
 
   return (
@@ -118,7 +139,7 @@ const RequestBuilder = ({ setResponse }: Props) => {
         </button>
       </div>
 
-      {/* Body Editor */}
+      {/* Body */}
       <div>
         <h4 className="font-semibold mb-2">Body</h4>
         <textarea
@@ -127,6 +148,34 @@ const RequestBuilder = ({ setResponse }: Props) => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
+      </div>
+
+      {/* Test Buttons */}
+      <div className="flex flex-wrap gap-2 mt-4">
+        <button
+          className="btn btn-sm btn-primary"
+          onClick={() => sendTestRequest("GET")}
+        >
+          Test GET
+        </button>
+        <button
+          className="btn btn-sm btn-secondary"
+          onClick={() => sendTestRequest("POST")}
+        >
+          Test POST
+        </button>
+        <button
+          className="btn btn-sm btn-accent"
+          onClick={() => sendTestRequest("PUT")}
+        >
+          Test PUT
+        </button>
+        <button
+          className="btn btn-sm btn-error"
+          onClick={() => sendTestRequest("DELETE")}
+        >
+          Test DELETE
+        </button>
       </div>
     </div>
   );
