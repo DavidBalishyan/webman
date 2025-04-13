@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendRequest } from "../services/apiClient";
 import { ApiResponse } from "../types";
+// import toast from "react-hot-toast";
 
 interface Props {
   setResponse: (res: ApiResponse) => void;
@@ -29,7 +30,6 @@ const RequestBuilder = ({ setResponse }: Props) => {
         return;
       }
     }
-
     try {
       const res = await sendRequest(method, url, parsedBody, headers);
       setResponse(res);

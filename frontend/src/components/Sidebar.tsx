@@ -1,3 +1,5 @@
+// import { Link } from "react-router-dom";
+
 const Sidebar = () => {
     return (
       <aside className="w-64 bg-base-100 border-r border-base-300 p-4 hidden md:block">
@@ -5,6 +7,7 @@ const Sidebar = () => {
         <ul className="menu">
           <li><a className="rounded-btn">New Request</a></li>
           <li><a className="rounded-btn">Saved Requests</a></li>
+          <li><a href="/auth">Login/Register</a></li>
         </ul>
       </aside>
     );
